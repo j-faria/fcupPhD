@@ -1,0 +1,26 @@
+\documentclass[12pt]{article}
+% full height = 11.69in
+% full width = 17.05in
+% spine width = 1.05in
+% front/back cover width = 8in
+\usepackage[paperheight=11.69in,paperwidth=17.05in,margin=0in]{geometry}
+\usepackage{pstricks}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+% \usepackage{uarial}
+% \renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+\thispagestyle{empty}
+\psset{unit=1in}
+\begin{pspicture}(0,0)(17.05in,11.69in)
+\psgrid
+
+\newsavebox\IBox
+\sbox\IBox{\includegraphics[height=1in]{/home/joao/Templates/logos/fcup_clipped.eps}}
+\rput[Bl](0,5.345){\usebox\IBox}
+
+\rput[Bl](9.05,5.845){\Huge text}
+
+\end{pspicture}
+\end{document}
