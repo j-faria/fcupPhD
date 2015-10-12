@@ -1,4 +1,4 @@
-%% ut-thesis.cls -- document class for graduate theses at UofT
+%% fcup-thesis.cls -- document class for graduate theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
 %% last updated at 09:43 (EDT) on Fri  1 Jun 2012
@@ -18,8 +18,8 @@
 %%
 %% This work consists of the files listed in the accompanying README.
 
-%% USAGE:  \documentclass{ut-thesis}
-%%         \documentclass[...options...]{ut-thesis}
+%% USAGE:  \documentclass{fcup-thesis}
+%%         \documentclass[...options...]{fcup-thesis}
 %%
 %% The default settings produce a final copy, ready for submission to
 %% the School of Graduate Studies (SGS) at the University of Toronto:
@@ -139,7 +139,7 @@
 %%    currently in effect) -- used to override the effects of options
 %%    `cleardoublepagestyleempty' or `cleardoublepagestyleplain'.
 %%
-%% The companion file `ut-thesis.tex' contains a skeleton illustrating
+%% The companion file `fcup-thesis.tex' contains a skeleton illustrating
 %% the use of this class.
 
 
@@ -149,7 +149,7 @@
 \newcommand*{\utthesisupdated}{2012/06/01} % date of last change(s)
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01] % robust macros with * form
-\ProvidesClass{ut-thesis}[\utthesisupdated\space\utthesisversion\space
+\ProvidesClass{fcup-thesis}[\utthesisupdated\space\utthesisversion\space
    graduate theses at the University of Toronto]
 
 
@@ -250,7 +250,7 @@
 
 %%%%%%%%%%%%       OPTION EXECUTION       %%%%%%%%%%%%
 
-%% Default settings: standard options followed by ut-thesis options.
+%% Default settings: standard options followed by fcup-thesis options.
 \ExecuteOptions{letterpaper,oneside,openright}
 \ExecuteOptions{normalmargins,onehalfspaced,singlespacednotes}
 
@@ -351,13 +351,12 @@
   {\par\endgroup\newpage}
 
 %% \begin{dedication}...\end{dedication} formats a dedication section
-%% (*not* on a separate page).
 \newenvironment*{dedication}%
   {\begin{center}
       \section*{Dedication}
    \end{center}
    \begingroup}%
-  {\par\endgroup}
+  {\par\endgroup\newpage}
 
 %% \begin{acknowledgements}...\end{acknowledgements} formats an
 %% acknowledgements section (*not* on a separate page).

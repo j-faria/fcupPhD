@@ -70,6 +70,8 @@
 %% \setstretch command to set the line spacing to a value other than
 %% single, one-and-a-half, or double spaced (see the `setspace' package
 %% for details).
+\usepackage[english]{babel}
+\usepackage{lipsum}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -86,7 +88,7 @@
 
 %% *** Change this example to appropriate values. ***
 \degree{Doctor of Philosophy}
-\department{Computer Science}
+\department{Departamento de Fisica e Astronomia}
 \gradyear{2012}
 \author{Fran\c{c}ois Pitt}
 \title{UT-Thesis Class File Example}
@@ -123,7 +125,16 @@
 %% However, if your document is two-sided and you want the abstract
 %% _not_ to appear on the back of the title page, then uncomment the
 %% following line.
-%\cleardoublepage
+\cleardoublepage
+
+
+%% This generates a "dedication" section, if needed
+%% (uncomment to have it appear in the document).
+\begin{dedication}
+%% *** Put your Dedication here. ***
+\lipsum[1-2]
+% \lipsum[3-56]
+\end{dedication}
 
 %% This generates the abstract page, with the line spacing adjusted
 %% according to SGS guidelines.
@@ -136,12 +147,6 @@
 %% appear on a separate page since the abstract ends with \newpage and
 %% the table of contents starts with \clearpage.  Use \cleardoublepage
 %% for anything that you want to appear on a right-hand page.
-
-%% This generates a "dedication" section, if needed
-%% (uncomment to have it appear in the document).
-%\begin{dedication}
-%% *** Put your Dedication here. ***
-%\end{dedication}
 
 %% The `dedication' and `acknowledgements' sections do not create new
 %% pages so if you want the two sections to appear on separate pages,
@@ -158,11 +163,11 @@
 
 %% This generates the List of Tables (on a separate page), if needed
 %% (uncomment to have it appear in the document).
-%\listoftables
+\listoftables
 
 %% This generates the List of Figures (on a separate page), if needed
 %% (uncomment to have it appear in the document).
-%\listoffigures
+\listoffigures
 
 %% You can add commands here to generate any other material that belongs
 %% in the head matter (for example, List of Plates, Index of Symbols, or
@@ -182,7 +187,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% *** Include chapter files here. ***
-
+\include{chapter1}
 
 %% This adds a line for the Bibliography in the Table of Contents.
 \addcontentsline{toc}{chapter}{Bibliography}
