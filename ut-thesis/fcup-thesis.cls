@@ -331,18 +331,20 @@
    \end{titlepage}
    \setcounter{page}{2}}
 
-%% Change \begin{abstract}...\end{abstract} to follow SGS guidelines.
+%% First abstract in English.
 \renewenvironment*{abstract}%
   {\begin{center}
       \section*{Abstract}
    \end{center}
-   \begin{center}
-      {\@title}\\[2ex]
-      {\@author}\\
-      {\@degree}\\
-      Graduate Department of {\@department}\\
-      University of Toronto\\
-      {\@gradyear}\\
+   \begingroup
+   %% Adjust line spacing: if it was less than 2, increase it to 2;
+   %% otherwise, leave it as is.
+   \ifdim \baselinestretch pt < 1.6pt \doublespacing\fi}%
+  {\par\endgroup\newpage}
+%% Second abstract in Portuguese.
+\newenvironment*{abstract-pt}%
+  {\begin{center}
+      \section*{Resumo}
    \end{center}
    \begingroup
    %% Adjust line spacing: if it was less than 2, increase it to 2;
@@ -365,7 +367,7 @@
       \section*{Acknowledgements}
    \end{center}
    \begingroup}%
-  {\par\endgroup}
+  {\par\endgroup\newpage}
 
 %% Redefine `thebibliography' environment so that it generates headers
 %% in the same style as the rest of the document.
