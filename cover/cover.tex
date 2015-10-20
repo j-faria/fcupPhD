@@ -1,3 +1,4 @@
+%!TEX program = xelatex
 \documentclass[12pt]{article}
 % full height = 11.69in
 % full width = 17.05in
@@ -14,7 +15,82 @@
 % \renewcommand{\familydefault}{\sfdefault}
 
 %R147 G191 B235
-\definecolor{fcupcolor}{rgb}{147,191,235}
+\definecolor{fcup}{rgb}{0.57,0.75,0.92}
+
+
+
+\usepackage{environ}% http://ctan.org/pkg/environ
+\newdimen\fontdim
+\newdimen\upperfontdim
+\newdimen\lowerfontdim
+\newif\ifmoreiterations
+\fontdim12pt
+
+\makeatletter
+\NewEnviron{fitbox}[2]{% \begin{fitbox}{<width>}{<height>} stuff \end{fitbox}
+  \def\buildbox{%
+    \setbox0\vbox{\hbox{\minipage{#1}%
+      \fontsize{\fontdim}{1.2\fontdim}%
+      \selectfont%
+      \stuff%
+    \endminipage}}%
+    \dimen@\ht0
+    \advance\dimen@\dp0
+  }
+  \def\stuff{\BODY}% Store environment body
+  \buildbox
+  % Compute upper and lower bounds
+  \ifdim\dimen@>#2
+    \loop
+      \fontdim.5\fontdim % Reduce font size by half
+      \buildbox
+    \ifdim\dimen@>#2 \repeat
+    \lowerfontdim\fontdim
+    \upperfontdim2\fontdim
+    \fontdim1.5\fontdim
+  \else
+    \loop
+      \fontdim2\fontdim % Double font size
+      \buildbox
+    \ifdim\dimen@<#2 \repeat
+    \upperfontdim\fontdim
+    \lowerfontdim.5\fontdim
+    \fontdim.75\fontdim
+  \fi
+  % Now try to find the optimum size
+  \loop
+    %\message{Bounds: \the\lowerfontdim\space
+    %         \the\fontdim\space \the\upperfontdim^^J}
+    \buildbox
+    \ifdim\dimen@>#2
+      \moreiterationstrue
+      \upperfontdim\fontdim
+      \advance\fontdim\lowerfontdim
+      \fontdim.5\fontdim
+    \else
+      \advance\dimen@-#2
+      \ifdim\dimen@<10pt
+        \lowerfontdim\fontdim
+        \advance\fontdim\upperfontdim
+        \fontdim.5\fontdim
+        \dimen@\upperfontdim
+        \advance\dimen@-\lowerfontdim
+        \ifdim\dimen@<.2pt
+          \moreiterationsfalse
+        \else
+          \moreiterationstrue
+        \fi
+      \else
+        \moreiterationsfalse
+      \fi
+    \fi
+  \ifmoreiterations \repeat
+  \box0% Typeset content
+}
+\makeatother
+
+
+
 
 \begin{document}
 \thispagestyle{empty}
@@ -33,7 +109,23 @@
 \rput[Bl](0,5.345){\usebox\IBoxBig}
 \rput[Bc](13.05,10){\usebox\IBoxBig}
 
-\rput[Bl](9.05,5.845){\Huge text}
+% \rput[Bl](9.05,5.845){\Huge Title of the thesis\\
+%                       \small Author}
+
+
+\setlength{\fboxsep}{100pt}
+\setlength{\fboxrule}{2pt}
+\rput[tl](9.05,7){
+\begin{fitbox}{12cm}{12cm}
+\textbf{This is the title of the\\ thesis
+  which can be long
+}
+\end{fitbox}}
+\rput[Bl](9.05,2.2){{\fontsize{18pt}{1em}\selectfont Author}}
+\rput[Bl](9.05,1.8){{\fontsize{14pt}{1em}\selectfont Tese de doutoramento apresentada à}}
+\rput[Bl](9.05,1.6){{\fontsize{14pt}{1em}\selectfont Faculdade de Ciências da Universidade do Porto}}
+\rput[Bl](9.05,1.4){{\fontsize{14pt}{1em}\selectfont Astronomia}}
+\rput[Bl](9.05,1.1){{\fontsize{16pt}{1em}\selectfont \the\year}}
 
 
 % set up the fonts we use
@@ -52,13 +144,14 @@
 \rput[c](8.5,.5){{\usebox\FCBox}}
 
 \rput[c](8.5,10){{\fontsize{10pt}{1em}\selectfont FCUP}}
-\rput[c](8.5,9.8){{\fontsize{10pt}{1em}\selectfont ANO}}
+\rput[c](8.5,9.8){{\fontsize{10pt}{1em}\selectfont \the\year}}
 
 
 
 
-\rput[tl]{270}(16.5,11.69){{\fontsize{215pt}{1em}\selectfont \color{blue}{PhD}}}
-\rput[lb]{90}(16.5,0){{\fontsize{215pt}{1em}\selectfont \color{blue}{PhD}}}
+\rput[tl]{270}(16.7,11.9){{\fontsize{215pt}{1em}\selectfont \textcolor{fcup}{PhD}}}
+\rput[lb]{90}(16.8,0){{\fontsize{215pt}{1em}\selectfont \textcolor{fcup}{PhD}}}
+\rput[lt]{-90}(1.75,5.47){{\fontsize{215pt}{1em}\selectfont \textcolor{fcup}{\reflectbox{PhD}}}}
 
 
 % \color{white}{Yuri Robbers --- Secrets of the Stamen}}
