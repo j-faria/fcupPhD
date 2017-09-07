@@ -1,14 +1,16 @@
 %!TEX program = xelatex
 \documentclass[12pt]{article}
 % full height = 11.69in
-% full width = 17.05in
+% full width = 17.59 (was 17.05in)
 % spine width = 1.05in
 % front/back cover width = 8in
-\usepackage[paperheight=11.69in,paperwidth=17.05in,margin=0in]{geometry}
+\usepackage[paperheight=11.69in,paperwidth=17.59in,margin=0in]{geometry}
+\setlength{\parindent}{0pt}
 \usepackage[dvipsnames,prologue,table]{pstricks}
 \usepackage{graphicx}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
+\usepackage{pst-text}% http://ctan.org/pkg/pst-text
 \usepackage[scaled]{helvet}
 \renewcommand*\familydefault{\sfdefault}
 % \usepackage{uarial}
@@ -16,7 +18,6 @@
 
 %R147 G191 B235
 \definecolor{fcup}{rgb}{0.57,0.75,0.92}
-
 
 
 \usepackage{environ}% http://ctan.org/pkg/environ
@@ -90,13 +91,54 @@
 \makeatother
 
 
+%% This code is to make empty letters for the 'PhD's in the corners
+\usepackage{stackengine,xcolor}
+\newcommand\shadowfy[1]{\expandafter\shadowfypars#1\par\relax\relax}
+\long\def\shadowfypars#1\par#2\relax{%
+  \ifx#1\relax\else
+    \shadowfywords#1 \relax\relax%
+  \fi%
+  \ifx\relax#2\else\par\shadowfypars#2\relax\fi%
+}
+\def\shadowfywords#1 #2\relax{%
+  \ifx#1\relax\else
+    \shadowfyletters#1\relax\relax%
+  \fi%
+  \ifx\relax#2\else\ \shadowfywords#2\relax\fi%
+}
+\def\shadowfyletters#1#2\relax{%
+  \shadow{#1}%
+  \ifx\relax#2\else\shadowfyletters#2\relax\fi}
+
+\newlength\shadowHoffset
+\newlength\shadowVoffset
+\setlength\shadowHoffset{.2pt}
+\setlength\shadowVoffset{.1pt}
+\def\primarycolor{white}
+\def\secondarycolor{black}
+
+\def\shadow#1{\setstackgap{L}{0pt}\def\stacktype{L}%
+  \def\useanchorwidth{T}% CAN BE COMMENTEDD FOR MORE INTERLETTER SPACE.
+  \Longstack{%
+  \raisebox{0pt}{\textcolor{\primarycolor}{#1}} 
+  \kern.7\shadowHoffset\raisebox{.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern-.7\shadowHoffset\raisebox{.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern\shadowHoffset\raisebox{0pt}{\textcolor{\secondarycolor}{#1}}
+  \kern-\shadowHoffset\raisebox{0pt}{\textcolor{\secondarycolor}{#1}}
+  \kern.7\shadowHoffset\raisebox{-.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern-.7\shadowHoffset\raisebox{-.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern0pt\raisebox{\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern0pt\raisebox{-\shadowVoffset}{\textcolor{\secondarycolor}{#1}}%
+}}
+
 
 
 \begin{document}
 \thispagestyle{empty}
 \psset{unit=1in}
-\begin{pspicture}(0,0)(17.05in,11.69in)
+\begin{pspicture}(0,0)(17.59in,11.69in)
 % \psgrid
+
 
 \newsavebox\IBoxBig
 \sbox\IBoxBig{\includegraphics[height=1in]{fcup_clipped.eps}}
@@ -109,54 +151,103 @@
 \rput[Bl](0,5.345){\usebox\IBoxBig}
 \rput[Bc](13.05,10){\usebox\IBoxBig}
 
-% \rput[Bl](9.05,5.845){\Huge Title of the thesis\\
-%                       \small Author}
-
 
 \setlength{\fboxsep}{100pt}
 \setlength{\fboxrule}{2pt}
 \rput[tl](9.05,7){
+% The fontsize of the title adjusts to the 12cm x 12cm box
 \begin{fitbox}{12cm}{12cm}
-\textbf{This is the title of the\\ thesis
-  which can be long
+% feel free to do line breaks where you want
+%%% CHANGE THIS %%%
+\textbf{This is the \\title of the\\ thesis which can be long
 }
 \end{fitbox}}
-\rput[Bl](9.05,2.2){{\fontsize{18pt}{1em}\selectfont Author}}
-\rput[Bl](9.05,1.8){{\fontsize{14pt}{1em}\selectfont Tese de doutoramento apresentada à}}
-\rput[Bl](9.05,1.6){{\fontsize{14pt}{1em}\selectfont Faculdade de Ciências da Universidade do Porto}}
-\rput[Bl](9.05,1.4){{\fontsize{14pt}{1em}\selectfont Astronomia}}
-\rput[Bl](9.05,1.1){{\fontsize{16pt}{1em}\selectfont \the\year}}
 
 
-% set up the fonts we use
-\DeclareFixedFont{\PT}{T1}{ppl}{b}{it}{0.5in}
-\DeclareFixedFont{\PTsmall}{T1}{ppl}{b}{it}{0.4in}
-\DeclareFixedFont{\PTsmallest}{T1}{ppl}{b}{it}{0.3in}
-\DeclareFixedFont{\PTtext}{T1}{ppl}{b}{it}{11pt}
-\DeclareFixedFont{\Logo}{T1}{pbk}{m}{n}{0.3in}
+%% depending on how big the title is,
+%% you can shift this text up or down by changing the \vpos value
+\newlength{\vpos}
+\setlength{\vpos}{2.2in}
+
+
+\rput[Bl](9.05,\vpos){{\fontsize{18pt}{1em}\selectfont %
+  %%% CHANGE THIS %%%
+  Author
+}}
+
+\setlength{\vpos}{\vpos - .4in}%
+\rput[Bl](9.05,\vpos){{\fontsize{14pt}{1em}\selectfont Tese de Doutoramento apresentada à}}
+\setlength{\vpos}{\vpos - .2in}%
+\rput[Bl](9.05,\vpos){{\fontsize{14pt}{1em}\selectfont Faculdade de Ciências da Universidade do Porto}}
+\setlength{\vpos}{\vpos - .2in}%
+\rput[Bl](9.05,\vpos){{\fontsize{14pt}{1em}\selectfont Astronomia}}
+\setlength{\vpos}{\vpos - .4in}%
+\rput[Bl](9.05,\vpos){{\fontsize{18pt}{1em}\selectfont \the\year}}
 
 
 
 %put the text on the spine (note the rotation over 270 degrees)
-\rput[l]{270}(8.5,11.69){{\fontsize{8.45mm}{1em}\selectfont PhD}}
+\rput[l]{270}(8.795,11.68){{\fontsize{8.45mm}{1em}\selectfont PhD}}
+
+\rput[l]{270}(8.795, 7.5){{%
+    \fontsize{11pt}{1em}\selectfont %
+      %%% CHANGE THIS %%%
+      \textbf{This is the title of the thesis which can be long}
+    }}
+
+
+\rput[ml]{270}(8.795, 3.5){{%
+    \fontsize{10pt}{1em}\selectfont %
+      %%% CHANGE THIS %%%
+      \textbf{Author}
+    }}
+
+
 %put the logos in the spine
-\rput[c]{270}(8.5,8.5){{\usebox\IBoxSmall}}
-\rput[c](8.5,.5){{\usebox\FCBox}}
-
-\rput[c](8.5,10){{\fontsize{10pt}{1em}\selectfont FCUP}}
-\rput[c](8.5,9.8){{\fontsize{10pt}{1em}\selectfont \the\year}}
+\rput[c]{270}(8.795,8.5){{\usebox\IBoxSmall}}
+\rput[c](8.795,.5){{\usebox\FCBox}}
 
 
+% the spine length is 1.05in
+% but we make this blue box 1.5in wide
+% 17.59/2 - 1.5/2 = 8.045
+% 17.59/2 + 1.5/2 = 9.545
+\psframe*[linewidth=0.01,linecolor=fcup](8.045,10.4)(9.545,10.8)
+
+\rput[c](8.795, 10.5){{%
+    \fontsize{10pt}{1em}\selectfont \textcolor{white}{\textbf{CICLO}}}}
+\rput[c](8.795, 10.65){{%
+    \fontsize{10pt}{1em}\selectfont \textcolor{white}{3$^{\circ}$}}}
+
+\rput[c](8.795,10.2){{\fontsize{10pt}{1em}\selectfont FCUP}}
+\rput[c](8.795,10.0){{\fontsize{10pt}{1em}\selectfont \the\year}}
 
 
-\rput[tl]{270}(16.7,11.9){{\fontsize{215pt}{1em}\selectfont \textcolor{fcup}{PhD}}}
-\rput[lb]{90}(16.8,0){{\fontsize{215pt}{1em}\selectfont \textcolor{fcup}{PhD}}}
-\rput[lt]{-90}(1.75,5.47){{\fontsize{215pt}{1em}\selectfont \textcolor{fcup}{\reflectbox{PhD}}}}
 
+%%% options for the outlined text in the borders
+\setlength\shadowHoffset{5pt}
+\setlength\shadowVoffset{2pt}
+\def\primarycolor{white}
+\def\secondarycolor{fcup}
 
-% \color{white}{Yuri Robbers --- Secrets of the Stamen}}
-% put the publisher’s logo on the spine
-% \rput[b](6.62,0.75){\color{white}{\fbox{\Logo L}}}
+% top right corner
+\rput[tl]{270}(17.52,11.9){%
+  {\fontsize{215pt}{1em}\selectfont %
+    \textcolor{fcup}{\shadowfy{PhD}}
+  }
+}
+% bottom right corner
+\rput[lb]{90}(17.58,-0.2){%
+  {\fontsize{215pt}{1em}\selectfont %
+    \textcolor{fcup}{\shadowfy{Ph}D}
+  }
+}
+% bottom left corner
+\rput[lb]{-90}(0, 5.3){%
+  {\fontsize{215pt}{1em}\selectfont %
+    \textcolor{fcup}{\reflectbox{\shadowfy{Ph}D}}
+  }
+}
 
 
 
