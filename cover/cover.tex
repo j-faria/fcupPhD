@@ -4,7 +4,7 @@
 % full width = 17.59 (was 17.05in)
 % spine width = 1.05in
 % front/back cover width = 8in
-\usepackage[paperheight=11.69in,paperwidth=17.59in,margin=0in]{geometry}
+\usepackage[paperheight=11.69in,paperwidth=17.05in,margin=0in]{geometry}
 \setlength{\parindent}{0pt}
 \usepackage[dvipsnames,prologue,table]{pstricks}
 \usepackage{graphicx}
@@ -19,6 +19,7 @@
 %R147 G191 B235
 \definecolor{fcup}{rgb}{0.57,0.75,0.92}
 
+\usepackage{lipsum}
 
 \usepackage{environ}% http://ctan.org/pkg/environ
 \newdimen\fontdim
@@ -136,7 +137,7 @@
 \begin{document}
 \thispagestyle{empty}
 \psset{unit=1in}
-\begin{pspicture}(0,0)(17.59in,11.69in)
+\begin{pspicture}(0,0)(\paperwidth,11.69in)
 % \psgrid
 
 
@@ -149,54 +150,59 @@
 
 
 \rput[Bl](0,5.345){\usebox\IBoxBig}
-\rput[Bc](13.05,10){\usebox\IBoxBig}
+\newlength{\xposlogo}
+\setlength{\xposlogo}{\paperwidth - 6cm - 215pt}
+\rput[Bl](\xposlogo, 10){\usebox\IBoxBig}
 
 
 \setlength{\fboxsep}{100pt}
 \setlength{\fboxrule}{2pt}
-\rput[tl](9.05,7){
+\newlength{\xpostitle}
+\setlength{\xpostitle}{\paperwidth - 12cm - 215pt}
+\rput[tl](\xpostitle,7){
 % The fontsize of the title adjusts to the 12cm x 12cm box
 \begin{fitbox}{12cm}{12cm}
-% feel free to do line breaks where you want
 %%% CHANGE THIS %%%
-\textbf{This is the \\title of the\\ thesis which can be long
-}
+% feel free (and encouraged!) to do line breaks where you want
+\textbf{This is the title of the thesis which can be long}
 \end{fitbox}}
 
 
 %% depending on how big the title is,
 %% you can shift this text up or down by changing the \vpos value
 \newlength{\vpos}
-\setlength{\vpos}{2.2in}
+\setlength{\vpos}{2.4in}
+\setlength{\xpostitle}{\xpostitle + 0.2cm} %% no idea what the 0.2cm is...
 
-
-\rput[Bl](9.05,\vpos){{\fontsize{18pt}{1em}\selectfont %
+\rput[Bl](\xpostitle,\vpos){{\fontsize{18pt}{1em}\selectfont %
   %%% CHANGE THIS %%%
   Author
 }}
 
 \setlength{\vpos}{\vpos - .4in}%
-\rput[Bl](9.05,\vpos){{\fontsize{14pt}{1em}\selectfont Tese de Doutoramento apresentada à}}
+\rput[Bl](\xpostitle,\vpos){{\fontsize{14pt}{1em}\selectfont Tese de Doutoramento apresentada à}}
 \setlength{\vpos}{\vpos - .2in}%
-\rput[Bl](9.05,\vpos){{\fontsize{14pt}{1em}\selectfont Faculdade de Ciências da Universidade do Porto}}
+\rput[Bl](\xpostitle,\vpos){{\fontsize{14pt}{1em}\selectfont Faculdade de Ciências da Universidade do Porto}}
 \setlength{\vpos}{\vpos - .2in}%
-\rput[Bl](9.05,\vpos){{\fontsize{14pt}{1em}\selectfont Astronomia}}
+\rput[Bl](\xpostitle,\vpos){{\fontsize{14pt}{1em}\selectfont Astronomia}}
 \setlength{\vpos}{\vpos - .4in}%
-\rput[Bl](9.05,\vpos){{\fontsize{18pt}{1em}\selectfont \the\year}}
+\rput[Bl](\xpostitle,\vpos){{\fontsize{18pt}{1em}\selectfont \the\year}}
 
 
 
+\newlength{\posmiddle}
+\setlength{\posmiddle}{\paperwidth / \real{2.0}}
 %put the text on the spine (note the rotation over 270 degrees)
-\rput[l]{270}(8.795,11.68){{\fontsize{8.45mm}{1em}\selectfont PhD}}
+\rput[l]{270}(\posmiddle,11.68){{\fontsize{8.45mm}{1em}\selectfont PhD}}
 
-\rput[l]{270}(8.795, 7.5){{%
+\rput[l]{270}(\posmiddle, 7.5){{%
     \fontsize{11pt}{1em}\selectfont %
       %%% CHANGE THIS %%%
       \textbf{This is the title of the thesis which can be long}
     }}
 
 
-\rput[ml]{270}(8.795, 3.5){{%
+\rput[ml]{270}(\posmiddle, 3.5){{%
     \fontsize{10pt}{1em}\selectfont %
       %%% CHANGE THIS %%%
       \textbf{Author}
@@ -204,23 +210,27 @@
 
 
 %put the logos in the spine
-\rput[c]{270}(8.795,8.5){{\usebox\IBoxSmall}}
-\rput[c](8.795,.5){{\usebox\FCBox}}
+\rput[c]{270}(\posmiddle,8.5){{\usebox\IBoxSmall}}
+\rput[c](\posmiddle,.5){{\usebox\FCBox}}
 
 
 % the spine length is 1.05in
 % but we make this blue box 1.5in wide
-% 17.59/2 - 1.5/2 = 8.045
 % 17.59/2 + 1.5/2 = 9.545
-\psframe*[linewidth=0.01,linecolor=fcup](8.045,10.4)(9.545,10.8)
+\newlength{\xposone}
+\setlength{\xposone}{\paperwidth / \real{2.0} - 0.75in}
+\newlength{\xpostwo}
+\setlength{\xpostwo}{\paperwidth / \real{2.0} + 0.75in}
 
-\rput[c](8.795, 10.5){{%
+\psframe*[linewidth=0.01,linecolor=fcup](\xposone,10.4)(\xpostwo,10.8)
+
+\rput[c](\posmiddle, 10.5){{%
     \fontsize{10pt}{1em}\selectfont \textcolor{white}{\textbf{CICLO}}}}
-\rput[c](8.795, 10.65){{%
+\rput[c](\posmiddle, 10.65){{%
     \fontsize{10pt}{1em}\selectfont \textcolor{white}{3$^{\circ}$}}}
 
-\rput[c](8.795,10.2){{\fontsize{10pt}{1em}\selectfont FCUP}}
-\rput[c](8.795,10.0){{\fontsize{10pt}{1em}\selectfont \the\year}}
+\rput[c](\posmiddle,10.2){{\fontsize{10pt}{1em}\selectfont FCUP}}
+\rput[c](\posmiddle,10.0){{\fontsize{10pt}{1em}\selectfont \the\year}}
 
 
 
@@ -231,13 +241,13 @@
 \def\secondarycolor{fcup}
 
 % top right corner
-\rput[tl]{270}(17.52,11.9){%
+\rput[tl]{270}(\paperwidth,11.9){%
   {\fontsize{215pt}{1em}\selectfont %
     \textcolor{fcup}{\shadowfy{PhD}}
   }
 }
 % bottom right corner
-\rput[lb]{90}(17.58,-0.2){%
+\rput[lb]{90}(\paperwidth,-0.2){%
   {\fontsize{215pt}{1em}\selectfont %
     \textcolor{fcup}{\shadowfy{Ph}D}
   }
