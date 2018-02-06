@@ -2,6 +2,16 @@ Abstract: up to 200 words
 Need to add keywords
 
 
+### to compile
+
+I like to use `latexmk`. Just run
+
+    latexmk -xelatex -interaction="nonstopmode" cover.tex
+    latexmk -xelatex -interaction="nonstopmode" titlepage.tex
+
+in the respective folders.
+If you don't have `latexmk` just compile like you would any LaTeX file, but with the `xelatex` engine.
+
 ### cover
 
 This is only an approximate translation of the (PowerPoint) cover template into LaTeX. I think it looks nice.  
