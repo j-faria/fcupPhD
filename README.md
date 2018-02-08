@@ -12,6 +12,9 @@ I like to use `latexmk`. Just run
 in the respective folders.
 If you don't have `latexmk` just compile like you would any LaTeX file, but with the `xelatex` engine.
 
+Please, open an [issue](https://github.com/j-faria/fcupPhD/issues) if you run into problems.
+
+
 ### cover
 
 This is only an approximate translation of the (PowerPoint) cover template into LaTeX. I think it looks nice.  
