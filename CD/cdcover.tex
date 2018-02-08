@@ -1,0 +1,227 @@
+%!TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=0in]{geometry}
+\setlength{\parindent}{0pt}
+\usepackage[dvipsnames]{pstricks}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{pst-text}% http://ctan.org/pkg/pst-text
+\usepackage[scaled]{helvet}
+\renewcommand*\familydefault{\sfdefault}
+% \usepackage{uarial}
+% \renewcommand{\familydefault}{\sfdefault}
+\usepackage{simplecd}
+
+
+%R147 G191 B235
+\definecolor{fcup}{rgb}{0.57,0.75,0.92}
+
+\usepackage{environ}% http://ctan.org/pkg/environ
+\newdimen\fontdim
+\newdimen\upperfontdim
+\newdimen\lowerfontdim
+\newif\ifmoreiterations
+\fontdim12pt
+
+\makeatletter
+\NewEnviron{fitbox}[2]{% \begin{fitbox}{<width>}{<height>} stuff \end{fitbox}
+  \def\buildbox{%
+    \setbox0\vbox{\hbox{\minipage{#1}%
+      \fontsize{\fontdim}{1.2\fontdim}%
+      \selectfont%
+      \stuff%
+    \endminipage}}%
+    \dimen@\ht0
+    \advance\dimen@\dp0
+  }
+  \def\stuff{\BODY}% Store environment body
+  \buildbox
+  % Compute upper and lower bounds
+  \ifdim\dimen@>#2
+    \loop
+      \fontdim.5\fontdim % Reduce font size by half
+      \buildbox
+    \ifdim\dimen@>#2 \repeat
+    \lowerfontdim\fontdim
+    \upperfontdim2\fontdim
+    \fontdim1.5\fontdim
+  \else
+    \loop
+      \fontdim2\fontdim % Double font size
+      \buildbox
+    \ifdim\dimen@<#2 \repeat
+    \upperfontdim\fontdim
+    \lowerfontdim.5\fontdim
+    \fontdim.75\fontdim
+  \fi
+  % Now try to find the optimum size
+  \loop
+    %\message{Bounds: \the\lowerfontdim\space
+    %         \the\fontdim\space \the\upperfontdim^^J}
+    \buildbox
+    \ifdim\dimen@>#2
+      \moreiterationstrue
+      \upperfontdim\fontdim
+      \advance\fontdim\lowerfontdim
+      \fontdim.5\fontdim
+    \else
+      \advance\dimen@-#2
+      \ifdim\dimen@<10pt
+        \lowerfontdim\fontdim
+        \advance\fontdim\upperfontdim
+        \fontdim.5\fontdim
+        \dimen@\upperfontdim
+        \advance\dimen@-\lowerfontdim
+        \ifdim\dimen@<.2pt
+          \moreiterationsfalse
+        \else
+          \moreiterationstrue
+        \fi
+      \else
+        \moreiterationsfalse
+      \fi
+    \fi
+  \ifmoreiterations \repeat
+  \box0% Typeset content
+}
+\makeatother
+
+
+%% This code is to make empty letters for the 'PhD's in the corners
+\usepackage{stackengine,xcolor}
+\newcommand\shadowfy[1]{\expandafter\shadowfypars#1\par\relax\relax}
+\long\def\shadowfypars#1\par#2\relax{%
+  \ifx#1\relax\else
+    \shadowfywords#1 \relax\relax%
+  \fi%
+  \ifx\relax#2\else\par\shadowfypars#2\relax\fi%
+}
+\def\shadowfywords#1 #2\relax{%
+  \ifx#1\relax\else
+    \shadowfyletters#1\relax\relax%
+  \fi%
+  \ifx\relax#2\else\ \shadowfywords#2\relax\fi%
+}
+\def\shadowfyletters#1#2\relax{%
+  \shadow{#1}%
+  \ifx\relax#2\else\shadowfyletters#2\relax\fi}
+
+\newlength\shadowHoffset
+\newlength\shadowVoffset
+\setlength\shadowHoffset{1.2pt}
+\setlength\shadowVoffset{0.7pt}
+\def\primarycolor{white}
+\def\secondarycolor{fcup}
+
+\def\shadow#1{\setstackgap{L}{0pt}\def\stacktype{L}%
+  \def\useanchorwidth{T}% CAN BE COMMENTEDD FOR MORE INTERLETTER SPACE.
+  \Longstack{%
+  \raisebox{0pt}{\textcolor{\primarycolor}{#1}} 
+  \kern.7\shadowHoffset\raisebox{.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern-.7\shadowHoffset\raisebox{.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern\shadowHoffset\raisebox{0pt}{\textcolor{\secondarycolor}{#1}}
+  \kern-\shadowHoffset\raisebox{0pt}{\textcolor{\secondarycolor}{#1}}
+  \kern.7\shadowHoffset\raisebox{-.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern-.7\shadowHoffset\raisebox{-.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern0pt\raisebox{\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern0pt\raisebox{-\shadowVoffset}{\textcolor{\secondarycolor}{#1}}%
+}}
+
+
+
+\begin{document}
+\thispagestyle{empty}
+\psset{unit=1in}
+
+\null
+\vskip2cm
+
+\begin{center}
+  
+  \frontcover{
+    
+    \begin{pspicture}(0,0)(13.8cm,11.75cm)
+    % \psgrid
+
+
+    \newlength{\xpostitle}
+    \setlength{\xpostitle}{\paperwidth - 19.5cm}
+
+    %%% CHANGE THIS %%%
+    %% depending on how big the title is,
+    %% you can shift it up or down by changing the \vpos value
+    \newlength{\vpos}
+    \setlength{\vpos}{3in}
+    %
+    \rput[tl](\xpostitle,\vpos){
+      % The fontsize of the title adjusts to the 6cm x 6cm box
+      \begin{fitbox}{6cm}{6cm}
+      %%% CHANGE THIS %%%
+      %%% feel free (and encouraged!) to do line breaks ( \\ ) where you want
+        \textbf{This is the title of the thesis which can be long}
+        % \newline  % add more \newline below to decrease the font size
+        % \newline
+    \end{fitbox}}
+
+
+    \newlength{\xposimg}
+    \setlength{\xposimg}{\linewidth - 6cm}
+    \rput[tl](\xposimg,4){\includegraphics[width=2.5cm]{fcup.pdf}}
+
+
+    % depending on how big the title is,
+    % you can shift this text up or down by changing the \vpos value
+    \setlength{\vpos}{0.6in}
+    \setlength{\xpostitle}{\xpostitle + 0.2cm} %% no idea what the 0.2cm is for...
+
+
+    \rput[Bl](\xpostitle,\vpos){{\fontsize{10pt}{1em}\selectfont %
+      %%% CHANGE THIS %%%
+      Name of the Author
+    }}
+
+    \setlength{\vpos}{\vpos - 1.3em}%
+    \rput[Bl](\xpostitle,\vpos){{\fontsize{8pt}{1em}\selectfont 
+      %%% CHANGE THIS %%%
+      Program Doutoral em \ldots
+    }}
+
+    \setlength{\vpos}{\vpos - 1em}%
+    \rput[Bl](\xpostitle,\vpos){{\fontsize{7pt}{1em}\selectfont 
+      %%% CHANGE THIS %%%
+      Departamento \ldots
+    }}
+
+
+
+    % top right corner
+    \rput[tl]{270}(0.996\linewidth,4.47){%
+      {\fontsize{90pt}{1em}\selectfont %
+        \textcolor{fcup}{\shadowfy{PhD}}
+      }
+    }
+    % bottom right corner
+    \rput[lb]{90}(\linewidth,-0.43){%
+      {\fontsize{90pt}{1em}\selectfont %
+        \textcolor{fcup}{\shadowfy{Ph}D}
+      }
+    }
+
+    \end{pspicture}
+  }
+
+
+\vskip1cm
+
+\backsheet[
+{
+  \vskip10cm
+  \includegraphics[width=2cm]{fcup.pdf}
+}
+]{}
+
+
+\end{center}
+
+\end{document}

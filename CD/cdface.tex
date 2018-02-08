@@ -1,0 +1,110 @@
+%!TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=0in]{geometry}
+\setlength{\parindent}{0pt}
+\usepackage[dvipsnames]{pstricks}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[scaled]{helvet}
+\renewcommand*\familydefault{\sfdefault}
+% \usepackage{uarial}
+% \renewcommand{\familydefault}{\sfdefault}
+\usepackage{simplecd}
+
+%R147 G191 B235
+\definecolor{fcup}{rgb}{0.57,0.75,0.92}
+
+
+%% This code is to make empty letters for the 'PhD'
+\usepackage{stackengine,xcolor}
+\newcommand\shadowfy[1]{\expandafter\shadowfypars#1\par\relax\relax}
+\long\def\shadowfypars#1\par#2\relax{%
+  \ifx#1\relax\else
+    \shadowfywords#1 \relax\relax%
+  \fi%
+  \ifx\relax#2\else\par\shadowfypars#2\relax\fi%
+}
+\def\shadowfywords#1 #2\relax{%
+  \ifx#1\relax\else
+    \shadowfyletters#1\relax\relax%
+  \fi%
+  \ifx\relax#2\else\ \shadowfywords#2\relax\fi%
+}
+\def\shadowfyletters#1#2\relax{%
+  \shadow{#1}%
+  \ifx\relax#2\else\shadowfyletters#2\relax\fi}
+
+\newlength\shadowHoffset
+\newlength\shadowVoffset
+\setlength\shadowHoffset{1.2pt}
+\setlength\shadowVoffset{.7pt}
+\def\primarycolor{white}
+\def\secondarycolor{fcup}
+
+\def\shadow#1{\setstackgap{L}{0pt}\def\stacktype{L}%
+  \def\useanchorwidth{T}% CAN BE COMMENTEDD FOR MORE INTERLETTER SPACE.
+  \Longstack{%
+  \raisebox{0pt}{\textcolor{\primarycolor}{#1}} 
+  \kern.7\shadowHoffset\raisebox{.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern-.7\shadowHoffset\raisebox{.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern\shadowHoffset\raisebox{0pt}{\textcolor{\secondarycolor}{#1}}
+  \kern-\shadowHoffset\raisebox{0pt}{\textcolor{\secondarycolor}{#1}}
+  \kern.7\shadowHoffset\raisebox{-.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern-.7\shadowHoffset\raisebox{-.7\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern0pt\raisebox{\shadowVoffset}{\textcolor{\secondarycolor}{#1}}
+  \kern0pt\raisebox{-\shadowVoffset}{\textcolor{\secondarycolor}{#1}}%
+}}
+
+
+
+\begin{document}
+\thispagestyle{empty}
+
+\null
+\vskip5cm
+
+\begin{center}
+  
+
+\cdrdisk{
+  \includegraphics[width=3cm]{fcup.pdf}
+  \vskip6pt
+
+  % \hskip1em
+  {\fontsize{48pt}{1em}\selectfont \textcolor{fcup}{\shadowfy{Ph}D}}
+
+
+  \vskip11em
+  %%% CHANGE THIS %%%
+  {\fontsize{10pt}{1em}\selectfont \textbf{Title of the thesis}}
+
+  \vskip1.5em
+  %%% CHANGE THIS %%%
+  {\fontsize{9pt}{1em}\selectfont Author}\\
+  {\fontsize{7pt}{1em}\selectfont Programa Doutoral em \ldots}\\[-0.3em]
+  {\fontsize{7pt}{1em}\selectfont Departamento \ldots}\\[0.3em]
+  %
+  %
+  %
+  {\fontsize{12pt}{1em}\selectfont \textbf{\the\year}}
+}
+
+\end{center}
+
+
+
+
+%%% options for the outlined text in the borders
+\setlength\shadowHoffset{5pt}
+\setlength\shadowVoffset{2pt}
+\def\primarycolor{white}
+\def\secondarycolor{fcup}
+
+% \rput[lb]{90}(\paperwidth,-0.2){%
+% }
+
+
+
+% \end{pspicture}
+\end{document}
