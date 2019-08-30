@@ -40,6 +40,13 @@ Things to consider:
    - add your own image!
 
 
+### CD
+
+You guessed it, this is only an approximate translation of the template into LaTeX. 
+
+   - edit where it says *%%% CHANGE THIS %%%*
+   - go through and edit the LaTeX if you don't like how something looks
+
 
 
 I will get in touch with FCUP to see if they consider using this as a general template.
