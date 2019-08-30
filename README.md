@@ -50,3 +50,6 @@ You guessed it, this is only an approximate translation of the template into LaT
 
 
 I will get in touch with FCUP to see if they consider using this as a general template.
+
+
+<a href="https://www.buymeacoffee.com/jfaria" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
